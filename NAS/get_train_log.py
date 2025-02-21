@@ -13,7 +13,7 @@ def get_train_log(id: int, snapshots_dir: str):
     firing_rate_layers = []
     file_dir = snapshots_dir + '/' + str(id)
     txt_dir = file_dir + '/train_process.txt'
-    model_dir = file_dir + '/ckpt.pth'
+    # model_dir = file_dir + '/ckpt.pth'
     fo = open(txt_dir, 'r')
     num_lines = len(fo.readlines())
     if num_lines > 200:
@@ -64,4 +64,5 @@ def get_train_log(id: int, snapshots_dir: str):
 
 if __name__ == '__main__':
     architecture_id, cnt_mat, model_param, train_acc, train_loss, val_acc, val_loss, test_acc, firing_rate_layers, time_s \
-        = get_train_log(3276, 'snapshots')
+        = get_train_log(1, 'E:/master_degree/SpikeNAS-Bench/data/CIFAR10')
+    print(architecture_id, cnt_mat, model_param, train_acc, train_loss, val_acc, val_loss, test_acc, firing_rate_layers, time_s)

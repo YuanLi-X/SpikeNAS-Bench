@@ -9,6 +9,9 @@ from evaluator import *
 from model_snn_withoutcupy import SNASNet
 from foresight.pruners import predictive
 from foresight.dataset import *
+from pymoo.algorithms.moo.nsga2 import NSGA2
+from pymoo.optimize import minimize
+from pymoo.core.population import Population
 
 def check_validity(coding):
     count_vector = coding.ravel()
@@ -58,37 +61,37 @@ def initialize_population(population_size):
 def evaluate_fitness(args, population, evaluator):
     evaluated_fitness = []
     search_time = 0
+    # architecture_id, cnt_mat, model_param, train_acc, train_loss, val_acc, val_loss, test_acc, \
+    # firing_rate_layers, time_s
     if evaluator == 'early_stop_test':
         for idv in population:
             idv_id = utils.encoding_to_id(idv)
-            _, _, _, _, _, _, _, test_acc, _, seconds = get_train_log(idv_id, 'E:/master_degree/SpikeNAS-Bench/data/CIFAR10')
-            evaluated_fitness.append(test_acc)
+            _, _, model_param, _, _, _, _, test_acc, _, seconds = get_train_log(idv_id, 'E:/master_degree/SpikeNAS-Bench/data/CIFAR10')
+            evaluated_fitness.append([1-test_acc, -model_param])
             search_time += seconds
 
     elif evaluator == 'early_stop_10':
         for idv in population:
             idv_id = utils.encoding_to_id(idv)
-            _, _, _, _, _, val_acc, _, _, _, seconds = get_train_log(idv_id, 'E:/master_degree/SpikeNAS-Bench/data/CIFAR10')
-            evaluated_fitness.append(val_acc[-1])
+            _, _, model_param, _, _, val_acc, _, _, _, seconds = get_train_log(idv_id, 'E:/master_degree/SpikeNAS-Bench/data/CIFAR10')
+            evaluated_fitness.append([1-val_acc[-1], -model_param])
             search_time += seconds * 0.1
 
     elif evaluator == 'early_stop_40':
         for idv in population:
             idv_id = utils.encoding_to_id(idv)
-            _, _, _, _, _, val_acc, _, _, _, seconds = get_train_log(idv_id, 'E:/master_degree/SpikeNAS-Bench/data/CIFAR10')
-            evaluated_fitness.append(val_acc[39])
+            _, _, model_param, _, _, val_acc, _, _, _, seconds = get_train_log(idv_id, 'E:/master_degree/SpikeNAS-Bench/data/CIFAR10')
+            evaluated_fitness.append([1-val_acc[39], -model_param])
             search_time += seconds * 0.4
 
     elif evaluator == 'early_stop_60':
         for idv in population:
             idv_id = utils.encoding_to_id(idv)
-            _, _, _, _, _, val_acc, _, _, _, seconds = get_train_log(idv_id, 'E:/master_degree/SpikeNAS-Bench/data/CIFAR10')
-            evaluated_fitness.append(val_acc[59])
+            _, _, model_param, _, _, val_acc, _, _, _, seconds = get_train_log(idv_id, 'E:/master_degree/SpikeNAS-Bench/data/CIFAR10')
+            evaluated_fitness.append([1-val_acc[59], -model_param])
             search_time += seconds * 0.6
 
-
-
-    return evaluated_fitness, search_time
+    return np.array(evaluated_fitness), search_time
 
 
 def generate_offspring(population_size, parent, fitness, pc, pm):

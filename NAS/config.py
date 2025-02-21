@@ -1,6 +1,7 @@
 import argparse
 
 
+
 def get_args():
     parser = argparse.ArgumentParser("NAS")
     parser.add_argument('--exp_name', type=str, default='NAS',  help='experiment name')
@@ -23,8 +24,8 @@ def get_args():
     parser.add_argument('--depth', default=4)
     parser.add_argument('--dim', default=80)
 
-    parser.add_argument('--population_size', type=int, default=10)
-    parser.add_argument('--generation_number', type=int, default=10)
+    parser.add_argument('--population_size', type=int, default=20)
+    parser.add_argument('--generation_number', type=int, default=50)
     parser.add_argument('--fitness_evaluator', type=str, default='early_stop_40', help='early_stop_10, early_stop_40, early_stop_60')
     parser.add_argument('--pc', type=float, default=0.9, help=' the probabity for crossover operation')
     parser.add_argument('--pm', type=float, default=0.2, help=' the probabity for mutation operation')

@@ -1,5 +1,4 @@
 import time
-
 import numpy as np
 import utils
 from get_train_log import get_train_log
@@ -9,6 +8,9 @@ from utils import *
 import logging
 import sys
 import random
+import os
+import torch
+
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 def seed_torch(seed=640):
     random.seed(seed)
@@ -61,7 +63,7 @@ population_last = population[-1]
 max_idx = np.array(fitness_last).argmax()
 best_arch = population_last[max_idx]
 best_id = utils.encoding_to_id(best_arch)
-_, _, model_param, _, _, val_acc, _, test_acc, _, _ = get_train_log(best_id, '../data/CIFAR10')
+_, _, model_param, _, _, val_acc, _, test_acc, _, _ = get_train_log(best_id, 'E:/master_degree/SpikeNAS-Bench/data/CIFAR10')
 logging.info("[architecture_{}] [params = {}] [val_acc = {:.3f}] [test_acc = {:.3f}]"
                  .format(best_id, model_param, val_acc[-1], test_acc))
 end = time.time()
