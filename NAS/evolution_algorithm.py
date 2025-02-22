@@ -3,7 +3,7 @@ import torch
 
 from utils import *
 import utils
-from get_train_log import get_train_log
+from get_train_log2 import get_train_log
 import random
 from evaluator import *
 from model_snn_withoutcupy import SNASNet

@@ -1,7 +1,7 @@
 import time
 import numpy as np
 import utils
-from get_train_log import get_train_log
+from get_train_log2 import get_train_log
 import config
 from evolution_algorithm import initialize_population, evaluate_fitness, generate_offspring, enviromental_selection
 from utils import *

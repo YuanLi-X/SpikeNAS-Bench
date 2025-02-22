@@ -5,7 +5,7 @@ import numpy as np
 import torch
 import random
 import sys
-from get_train_log import get_train_log
+from get_train_log2 import get_train_log
 import config
 import utils
 from evolution_algorithm_obj2 import initialize_population, generate_offspring, enviromental_selection
